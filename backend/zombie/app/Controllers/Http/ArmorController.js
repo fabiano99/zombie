@@ -1,5 +1,5 @@
 'use strict'
-
+const Armor = use('App/Models/Armor');
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -17,20 +17,11 @@ class ArmorController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
+  async index () {
+    const armors = await Armor.all();
+    return armors;
   }
 
-  /**
-   * Render a form to be used for creating a new armor.
-   * GET armors/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
-  }
 
   /**
    * Create/save a new armor.
@@ -40,7 +31,11 @@ class ArmorController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request }) {
+    const data = request.only(['name', 'defense']);
+    const armor = await Armor.create({...data});
+
+    return armor;
   }
 
   /**
@@ -52,20 +47,11 @@ class ArmorController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
+  async show ({ params }) {
+    const armor = await Armor.findOrFail(params.id)
+    return armor;
   }
 
-  /**
-   * Render a form to update an existing armor.
-   * GET armors/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
 
   /**
    * Update armor details.
@@ -75,7 +61,14 @@ class ArmorController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update ({ params, request }) {
+    const armor = await Armor.findOrFail(params.id);
+    const data = request.only(["name", "defense"]);
+    
+    armor.merge(data);
+    await armor.save();
+    
+    return armor
   }
 
   /**
@@ -86,7 +79,9 @@ class ArmorController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params }) {
+    const armor = await Armor.findOrFail(params.id)
+    await armor.delete();
   }
 }
 
