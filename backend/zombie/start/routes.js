@@ -22,4 +22,5 @@ Route.post('/authenticate', 'AuthController.authenticate');
 Route.group(() => {
   Route.resource('weapons', 'WeaponController').apiOnly();
   Route.resource('armors', 'ArmorController').apiOnly();
+  Route.resource('zombies', 'ZombieController').apiOnly();
 }).middleware('auth');

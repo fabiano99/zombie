@@ -1,5 +1,5 @@
 'use strict'
-
+const Zombie = use('App/Models/Zombie');
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -17,19 +17,9 @@ class ZombieController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
-  }
-
-  /**
-   * Render a form to be used for creating a new zombie.
-   * GET zombies/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async index () {
+    const zombie = await Zombie.all();
+    return zombie;
   }
 
   /**
@@ -40,7 +30,21 @@ class ZombieController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request, params, response }) {
+    const { name, weapons, armors } = request.post();
+    const zombie = await Zombie.create({ name });
+
+    if(weapons && weapons.length > 0) {
+      await zombie.weapons().attach(weapons)
+      await zombie.load('weapons')
+    }
+
+    if(armors && armors.length > 0) {
+      await zombie.armors().attach(armors)
+      await zombie.load('armors')
+    }
+
+    return zombie;
   }
 
   /**
@@ -52,19 +56,13 @@ class ZombieController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
-  }
-
-  /**
-   * Render a form to update an existing zombie.
-   * GET zombies/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
+  async show ({ params }) {
+    const  zombie  = await Zombie.findOrFail(params.id);
+    const weapons = await zombie.weapons().fetch();
+    const armors = await zombie.armors().fetch();
+    zombie.weapons = weapons;
+    zombie.armors = armors;
+    return zombie;
   }
 
   /**
@@ -75,7 +73,27 @@ class ZombieController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update ({ params, request }) {
+    const zombie = await Zombie.findOrFail(params.id);
+
+    const {name, weapons, armors} = request.only(["name","weapons", "armors"]);
+
+    zombie.merge({name});
+    await zombie.save();
+
+    if(weapons && weapons.length > 0) {
+      await zombie.weapons().detach()
+      await zombie.weapons().attach(weapons)
+      await zombie.load('weapons')
+    }
+
+    if(armors && armors.length > 0) {
+      await zombie.armors().detach()
+      await zombie.armors().attach(armors)
+      await zombie.load('armors')
+    }
+    
+    return zombie
   }
 
   /**
@@ -87,6 +105,8 @@ class ZombieController {
    * @param {Response} ctx.response
    */
   async destroy ({ params, request, response }) {
+    const zombie = await Zombie.findOrFail(params.id)
+    await zombie.delete();
   }
 }
 

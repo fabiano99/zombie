@@ -9,13 +9,6 @@ class ArmorSchema extends Schema {
       table.increments()
       table.string('name', 240).notNullable()
       table.integer('defense').unsigned().notNullable()
-      table
-        .integer('zombie_id')
-        .unsigned()
-        .references('id')
-        .inTable('zombies')
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE')
       table.timestamps()
     })
   }

@@ -5,11 +5,11 @@ const Model = use('Model')
 
 class Zombie extends Model {
 	weapons () {
-		return this.hasMany('App/Models/Weapon');
+		return this.belongsToMany('App/Models/Weapon');
 	}
 
 	armors () {
-		return this.hasMany('App/Models/armors');
+		return this.belongsToMany('App/Models/Armor');
 	}
 }
 
