@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text } from 'react-native';
 import {Background, Container, Logo, AreaInput, Input, SubmitButton, SubmitText, SignUpLink, SignUpText} from './styles';
 
-export default function SignIn(){
+export default function SignIn({ navigation }){
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -38,7 +38,7 @@ export default function SignIn(){
 					</SubmitText>
 				</SubmitButton>
 
-				<SignUpLink onPress={()=>{}}>
+				<SignUpLink onPress={()=> navigation.navigate('SignUp') }>
 					<SignUpText>
 						Criar conta grátis
 					</SignUpText>
