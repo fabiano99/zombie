@@ -1,11 +1,33 @@
 import React, { useState } from 'react';
 import {Keyboard, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Container, Input, DefenseText, SubmitButton, SubmitText, DefenseSlider,TitleText } from './styles';
+import { Container, Input, DefenseText, SubmitButton, SubmitText, DefenseSlider,TitleText, TextError } from './styles';
+import api from '../../services/api';
 
-export default function Armor(){
+export default function Armor({ navigation }){
   const [defense, setDefense] = useState(0);
   const [name, setName] = useState('');
+	const [errorMessage, setErrorMessage] = useState('');
+
+  save = async () => {
+		try {
+			const response = await api.post('/armors', {
+      defense,
+      name
+      });
+
+      setDefense(0);
+      setName('');
+      Keyboard.dismiss();
+
+			// navigation.navigate({ routeName: 'Preload' });
+			setErrorMessage(null);
+
+		} catch(response) {
+			alert('Erro no cadastro!')
+			setErrorMessage(response);
+		}
+	}
 
   return(
     <Container>
@@ -37,18 +59,9 @@ export default function Armor(){
         onValueChange={value => setDefense(value) }
       />
 
+      <TextError> { errorMessage  } </TextError> 
 
-
-      {/* <PickerItem
-        selectedValue={tipo} 
-        onValueChange={ (itemValue, itemIndex)=> setTipo(itemValue) }
-      >
-         <Picker.Item label="Receita" value="receita" /> 
-         <Picker.Item label="Despesa" value="despesa" /> 
-      </PickerItem> */}
-
-
-      <SubmitButton onPress={ ()=> {} }>
+      <SubmitButton onPress={ save }>
         <SubmitText>Salvar</SubmitText>
       </SubmitButton>
 

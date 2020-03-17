@@ -65,3 +65,7 @@ export const TitleText = styled.Text`
   text-align: center;
   color: white;
 `;
+
+export const TextError = styled.Text`
+  color: #EF230C;
+`;
