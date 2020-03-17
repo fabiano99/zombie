@@ -1,14 +1,54 @@
 import React, { useState } from 'react';
-import { Platform } from 'react-native';
+import { Platform, Alert, AsyncStorage } from 'react-native';
 
 import { Background, Container, Logo, AreaInput, Input,
-         SubmitButton, SubmitText, SignUpText, SignInButton, SignInText} from './styles';
+		 SubmitButton, SubmitText, SignUpText, SignInButton, SignInText, TextError} from './styles';
+import { env } from '../../services/connection';
+import api from '../../services/api';
+		 
+
+
 
 export default function SignUp({ navigation }){
 
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+	const [errorMessage, setErrorMessage] = useState('');
+
+  async function handleSubmit() {
+    if(nome === '' || email === '' || password === '') {
+      setErrorMessage('Preencha todos os campos');
+      return;
+    }
+    try {
+			const response = await api.post('/register', {
+				email: email,
+        password: password,
+        username: nome
+			});
+	
+			const { token } = response.data;
+	
+			await AsyncStorage.multiSet([
+				['@CodeApi: token', token]
+			]);
+
+			Alert.alert('Usuário Cadastrado!');
+			setErrorMessage(null);
+
+		} catch(response) {
+      Alert.alert('Erro no Cadastro!');
+			setErrorMessage('Erro no Cadastro!');
+		}
+       
+  }
+
+  function singOut() {
+
+  }
+
+  singOut();
 
   return(
     <Background>
@@ -46,7 +86,9 @@ export default function SignUp({ navigation }){
           />
         </AreaInput>
 
-        <SubmitButton onPress={()=>{}}>
+        <TextError> { errorMessage  } </TextError> 
+
+        <SubmitButton onPress={handleSubmit}>
           <SubmitText>Cadastrar</SubmitText>
         </SubmitButton>
 

@@ -59,3 +59,6 @@ export const SignInText = styled.Text`
   padding-bottom: 13px;
 `;
 
+export const TextError = styled.Text`
+  color: #EF230C;
+`;
