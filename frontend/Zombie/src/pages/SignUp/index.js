@@ -3,18 +3,14 @@ import { Platform, Alert, AsyncStorage } from 'react-native';
 
 import { Background, Container, Logo, AreaInput, Input,
 		 SubmitButton, SubmitText, SignUpText, SignInButton, SignInText, TextError} from './styles';
-import { env } from '../../services/connection';
 import api from '../../services/api';
 		 
-
-
-
 export default function SignUp({ navigation }){
 
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-	const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   async function handleSubmit() {
     if(nome === '' || email === '' || password === '') {
@@ -26,20 +22,16 @@ export default function SignUp({ navigation }){
 				email: email,
         password: password,
         username: nome
-			});
-	
-			const { token } = response.data;
-	
-			await AsyncStorage.multiSet([
-				['@CodeApi: token', token]
-			]);
+      });
 
-			Alert.alert('Usuário Cadastrado!');
+      
 			setErrorMessage(null);
+      navigation.navigate({ routeName: 'SignIn' });
 
 		} catch(response) {
-      Alert.alert('Erro no Cadastro!');
-			setErrorMessage('Erro no Cadastro!');
+
+      setErrorMessage('Erro no Cadastro!');
+      
 		}
        
   }

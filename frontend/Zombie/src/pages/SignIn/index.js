@@ -11,7 +11,6 @@ export default function SignIn({ navigation }){
 	const [errorMessage, setErrorMessage] = useState('');
 
 	handleSubmit = async () => {
-
 		try {
 			const response = await api.post('/authenticate', {
 				email: email,
@@ -19,19 +18,18 @@ export default function SignIn({ navigation }){
 			});
 	
 			const { token } = response.data;
-	
+
 			await AsyncStorage.multiSet([
-				['@CodeApi: token', token]
+				['@ZombieApi:token', token]
 			]);
 
-			Alert.alert('Login bem sucedido!')
+			navigation.navigate({ routeName: 'Preload' });
 			setErrorMessage(null);
 
 		} catch(response) {
 			Alert.alert('Erro no Login!')
 			setErrorMessage(response.data[0]['message']);
 		}
-		
 	}
 
 	return (
