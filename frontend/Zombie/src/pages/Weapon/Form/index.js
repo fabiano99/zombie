@@ -1,11 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Keyboard, Text} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Container, Input, AttackText, SubmitButton, SubmitText, AttackSlider,TitleText } from './styles';
+import { Container, Input, AttackText, SubmitButton, SubmitText, AttackSlider,TitleText, TextError } from './styles';
+import api from '../../../services/api';
 
-export default function WeaponForm(){
+export default function WeaponForm({ navigation }){
+
+  const  id  = navigation?.state?.params?.id
   const [attack, setAttack] = useState(0);
   const [name, setName] = useState('');
+	const [errorMessage, setErrorMessage] = useState('');
+
+  let save = async (id) => {
+    let response;
+		try {
+      if(attack === '' || name === '') {
+        setErrorMessage('Preencha todos os campos');
+        return;
+      }
+
+      if(id) {
+       response = await api.put(`/weapons/${id}`, {
+          attack,
+          name
+          });
+      } else {
+        response = await api.post('/weapons', {
+          attack,
+          name
+          });
+      }
+
+
+      setAttack(0);
+      setName('');
+      Keyboard.dismiss();
+
+			// navigation.navigate({ routeName: 'Preload' });
+			setErrorMessage(null);
+
+		} catch(response) {
+			alert('Erro no cadastro!')
+			setErrorMessage(response);
+		}
+  }
+  
+  let load = async (id) => {
+    if(id) {
+      const response = await api.get(`/weapons/${id}`)
+      console.log(response);
+      setName(response.data.name);
+      setAttack(response.data.attack);
+    }
+
+  }
+
+  useEffect( () => { load(id) },[])
 
   return(
     <Container>
@@ -38,7 +87,9 @@ export default function WeaponForm(){
         onValueChange={value => setAttack(value) }
       />
 
-      <SubmitButton onPress={ ()=> {} }>
+      <TextError> { errorMessage  } </TextError> 
+
+      <SubmitButton onPress={ () => save(id) }>
         <SubmitText>Salvar</SubmitText>
       </SubmitButton>
 
@@ -46,9 +97,9 @@ export default function WeaponForm(){
   )
 }
 
-WeaponForm.navigationOptions = {
-  tabBarLabel: 'Registrar',
-  tabBarIcon: ({ tintColor }) => (
-    <Icon name="edit" size={24} color={tintColor} />
-  )
-};
+// WeaponForm.navigationOptions = {
+//   tabBarLabel: 'Registrar',
+//   tabBarIcon: ({ tintColor }) => (
+//     <Icon name="edit" size={24} color={tintColor} />
+//   )
+// };

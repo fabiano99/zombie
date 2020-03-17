@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {Keyboard, Text} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Container, Input, DefenseText, SubmitButton, SubmitText, DefenseSlider,TitleText, TextError } from './styles';
 import api from '../../../services/api';
 
@@ -97,9 +96,9 @@ export default function ArmorForm({ navigation }){
   )
 }
 
-ArmorForm.navigationOptions = {
-  tabBarLabel: 'Registrar',
-  tabBarIcon: ({ tintColor }) => (
-    <Icon name="edit" size={24} color={tintColor} />
-  )
-};
+// ArmorForm.navigationOptions = {
+//   tabBarLabel: 'Registrar',
+//   tabBarIcon: ({ tintColor }) => (
+//     <Icon name="edit" size={24} color={tintColor} />
+//   )
+// };

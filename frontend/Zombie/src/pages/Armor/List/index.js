@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Text, Button, View } from 'react-native';
-import { Container, AreaSaldo, SaldoTitle, Saldo, Registros, Title, IconRight, List } from './styles';
+import { Container, Registros, Title, IconRight, List } from './styles';
 import ListItem from '../../../components/ListItem';
 import api from '../../../services/api';
 import  Icon  from 'react-native-vector-icons/MaterialIcons';

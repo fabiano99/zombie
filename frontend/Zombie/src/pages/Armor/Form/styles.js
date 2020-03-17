@@ -18,14 +18,6 @@ export const Input = styled.TextInput.attrs({
   font-size: 16px;
 `;
 
-export const PickerItem = styled.Picker`
-  height: 50px;
-  width: 90%;
-  background-color: rgba(255,255,255, 0.9);
-  margin-top: 20px;
-  font-size: 16px;
-`;
-
 export const SubmitButton = styled.TouchableOpacity`
   height: 50px;
   width: 90%;

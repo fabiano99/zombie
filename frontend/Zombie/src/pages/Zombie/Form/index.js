@@ -110,9 +110,9 @@ export default function ZombieForm(){
   )
 }
 
-ZombieForm.navigationOptions = {
-  tabBarLabel: 'Zombie',
-  tabBarIcon: ({ tintColor }) => (
-    <Icon name="account-circle" size={24} color={tintColor} />
-  )
-};
+// ZombieForm.navigationOptions = {
+//   tabBarLabel: 'Zombie',
+//   tabBarIcon: ({ tintColor }) => (
+//     <Icon name="account-circle" size={24} color={tintColor} />
+//   )
+// };
