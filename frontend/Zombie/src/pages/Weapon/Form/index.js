@@ -3,7 +3,7 @@ import {Keyboard, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Container, Input, AttackText, SubmitButton, SubmitText, AttackSlider,TitleText } from './styles';
 
-export default function Weapon(){
+export default function WeaponForm(){
   const [attack, setAttack] = useState(0);
   const [name, setName] = useState('');
 
@@ -46,7 +46,7 @@ export default function Weapon(){
   )
 }
 
-Weapon.navigationOptions = {
+WeaponForm.navigationOptions = {
   tabBarLabel: 'Registrar',
   tabBarIcon: ({ tintColor }) => (
     <Icon name="edit" size={24} color={tintColor} />

@@ -11,7 +11,7 @@ function Item({ title }) {
   );
 }
 
-export default function Zombie(){
+export default function ZombieForm(){
 
   let armas = [
     {id: 1, name: 'Manchete', attack: 15},
@@ -110,7 +110,7 @@ export default function Zombie(){
   )
 }
 
-Zombie.navigationOptions = {
+ZombieForm.navigationOptions = {
   tabBarLabel: 'Zombie',
   tabBarIcon: ({ tintColor }) => (
     <Icon name="account-circle" size={24} color={tintColor} />

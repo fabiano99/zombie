@@ -1,20 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Keyboard, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Container, Input, DefenseText, SubmitButton, SubmitText, DefenseSlider,TitleText, TextError } from './styles';
-import api from '../../services/api';
+import api from '../../../services/api';
 
-export default function Armor({ navigation }){
+export default function ArmorForm({ navigation }){
+
+  const  id  = navigation?.state?.params?.id
   const [defense, setDefense] = useState(0);
   const [name, setName] = useState('');
 	const [errorMessage, setErrorMessage] = useState('');
 
-  save = async () => {
+  let save = async (id) => {
+    let response;
 		try {
-			const response = await api.post('/armors', {
-      defense,
-      name
-      });
+      if(defense === '' || name === '') {
+        setErrorMessage('Preencha todos os campos');
+        return;
+      }
+
+      if(id) {
+       response = await api.put(`/armors/${id}`, {
+          defense,
+          name
+          });
+      } else {
+        response = await api.post('/armors', {
+          defense,
+          name
+          });
+      }
+
 
       setDefense(0);
       setName('');
@@ -27,7 +43,19 @@ export default function Armor({ navigation }){
 			alert('Erro no cadastro!')
 			setErrorMessage(response);
 		}
-	}
+  }
+  
+  let load = async (id) => {
+    if(id) {
+      const response = await api.get(`/armors/${id}`)
+      console.log(response);
+      setName(response.data.name);
+      setDefense(response.data.defense);
+    }
+
+  }
+
+  useEffect( () => { load(id) },[])
 
   return(
     <Container>
@@ -61,7 +89,7 @@ export default function Armor({ navigation }){
 
       <TextError> { errorMessage  } </TextError> 
 
-      <SubmitButton onPress={ save }>
+      <SubmitButton onPress={ () => save(id) }>
         <SubmitText>Salvar</SubmitText>
       </SubmitButton>
 
@@ -69,7 +97,7 @@ export default function Armor({ navigation }){
   )
 }
 
-Armor.navigationOptions = {
+ArmorForm.navigationOptions = {
   tabBarLabel: 'Registrar',
   tabBarIcon: ({ tintColor }) => (
     <Icon name="edit" size={24} color={tintColor} />

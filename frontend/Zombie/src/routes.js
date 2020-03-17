@@ -7,9 +7,12 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 
 import Dashboard from './pages/Dashboard';
-import Weapon from './pages/Weapon';
-import Armor from './pages/Armor';
-import Zombie from './pages/Zombie';
+import WeaponForm from './pages/Weapon/Form';
+import WeaponList from './pages/Weapon/List';
+import ArmorForm from './pages/Armor/Form';
+import ArmorList from './pages/Armor/List';
+import ZombieForm from './pages/Zombie/Form';
+import ZombieList from './pages/Zombie/List';
 
 
 
@@ -23,9 +26,12 @@ const Routes = createAppContainer(
 			}),
 			App: createBottomTabNavigator({
 				Dashboard,
-				Weapon,
-				Armor,
-				Zombie
+				WeaponList,
+				WeaponForm,
+				ArmorList,
+				ArmorForm,
+				ZombieList,
+				ZombieForm
 			}, {
 				tabBarOptions:{
 				  showLabel: false,
