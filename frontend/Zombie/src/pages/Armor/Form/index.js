@@ -5,7 +5,7 @@ import api from '../../../services/api';
 
 export default function ArmorForm({ navigation }){
 
-  const  id  = navigation?.state?.params?.id
+  let  id  = navigation?.state?.params?.id
   const [defense, setDefense] = useState(0);
   const [name, setName] = useState('');
 	const [errorMessage, setErrorMessage] = useState('');
@@ -29,32 +29,29 @@ export default function ArmorForm({ navigation }){
           name
           });
       }
-
-
+      
+      load(id);
       setDefense(0);
       setName('');
       Keyboard.dismiss();
 
-			// navigation.navigate({ routeName: 'Preload' });
 			setErrorMessage(null);
 
 		} catch(response) {
-			alert('Erro no cadastro!')
+			alert('Erro no cadastro!');
 			setErrorMessage(response);
 		}
   }
   
   let load = async (id) => {
     if(id) {
-      const response = await api.get(`/armors/${id}`)
-      console.log(response);
+      const response = await api.get(`/armors/${id}`);
       setName(response.data.name);
       setDefense(response.data.defense);
     }
-
   }
 
-  useEffect( () => { load(id) },[])
+  useEffect( () => { load(id) }, [id]);
 
   return(
     <Container>

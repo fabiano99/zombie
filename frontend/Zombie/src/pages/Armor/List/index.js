@@ -8,19 +8,24 @@ import  Icon  from 'react-native-vector-icons/MaterialIcons';
 
 export default function ArmorList({ navigation }){
 
-
   const [armors, setArmors] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
   
   async function list() {
+    setRefreshing(true)
+    setArmors([]);
     let tmpList = await api.get('/armors');
     setArmors(tmpList.data);
-
-    console.log(armors);
+    setRefreshing(false)
   }
 
-
-  useEffect(() => {
+  function refresh() {
     list();
+  }
+  refresh = refresh.bind(this);
+
+  useEffect(  () => {
+      list();
   }, [])
 
 
@@ -41,7 +46,11 @@ export default function ArmorList({ navigation }){
       <List
         keyExtractor={item => item.key}
         data={armors}
-        renderItem={ ({item}) => <ListItem navigation={navigation} data={item} route={'armors'} edit={'ArmorForm'} /> }
+        renderItem={ ({item}) => <ListItem navigation={navigation} refresh={refresh} data={item} route={'armors'} edit={'ArmorForm'} /> }
+        refreshing={refreshing}
+        extraData={armors}
+        onRefresh={ ()=>refresh() }
+      
       />
 
 

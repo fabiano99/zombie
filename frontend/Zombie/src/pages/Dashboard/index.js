@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {View, Text, TouchableOpacity, AsyncStorage} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Container, AreaSaldo, SaldoTitle, Saldo, Registros, Title, IconRight, List } from './styles';
-import HistoricoList from '../../components/HistoricoList';
+// import HistoricoList from '../../components/HistoricoList';
 
 export default function Dashboard({ navigation }){
 
@@ -31,11 +31,11 @@ export default function Dashboard({ navigation }){
         </IconRight>
       </Registros>
 
-      <List
+      {/* <List
         keyExtractor={item => item.key}
         data={historico}
         renderItem={ ({item}) => <HistoricoList data={item} /> }
-      />
+      /> */}
 
     </Container>
   )

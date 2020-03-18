@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, Button, View } from 'react-native';
+import { Text, Button, View, SafeAreaView, FlatList, RefreshControl } from 'react-native';
 import { Container, Registros, Title, IconRight, List } from './styles';
 import ListItem from '../../../components/ListItem';
 import api from '../../../services/api';
@@ -8,18 +8,23 @@ import  Icon  from 'react-native-vector-icons/MaterialIcons';
 
 export default function WeaponList({ navigation }){
 
-
   const [weapons, setWeapons] = useState([]);
-  
+  const [refreshing, setRefreshing] = useState(false);
+
   async function list() {
+    setRefreshing(true)
+    setWeapons([]);
     let tmpList = await api.get('/weapons');
     setWeapons(tmpList.data);
-
-    console.log(weapons);
+    setRefreshing(false)
   }
 
+  function refresh() {
+    list();
+  }
+  refresh = refresh.bind(this);
 
-  useEffect(() => {
+  useEffect( () => {
     list();
   }, [])
 
@@ -28,7 +33,7 @@ export default function WeaponList({ navigation }){
     <Container>
 
       <Registros>
-        <Title>Lista de Armas</Title>
+        <Title>Lista de Armas ({ weapons.length }) </Title>
 
         <IconRight 
         style={{ backgroundColor: 'white', borderRadius: 15, alignItems: 'center', width: 30 }}
@@ -41,8 +46,16 @@ export default function WeaponList({ navigation }){
       <List
         keyExtractor={item => item.key}
         data={weapons}
-        renderItem={ ({item}) => <ListItem navigation={navigation} data={item} route={'weapons'} edit={'WeaponForm'} /> }
+        renderItem={ 
+          ({item}) => <ListItem navigation={navigation} refresh={refresh} data={item} route={'weapons'} edit={'WeaponForm'} /> 
+        }
+          refreshing={refreshing}
+          extraData={weapons}
+          onRefresh={ ()=>refresh() }
       />
+
+
+
   </Container>
   )
 }

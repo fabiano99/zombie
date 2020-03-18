@@ -1,13 +1,59 @@
-import React from 'react';
-import { Text } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import React, { useState, useEffect } from 'react';
+import { Text, Button, View } from 'react-native';
+import { Container, Registros, Title, IconRight, List } from './styles';
+import ListItem from '../../../components/ListItem';
+import api from '../../../services/api';
+import  Icon  from 'react-native-vector-icons/MaterialIcons';
+
 
 export default function ZombieList({ navigation }){
 
+
+  const [zombies, setZombies] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+  
+  async function list() {
+    setRefreshing(true)
+    setZombies([]);
+    let tmpList = await api.get('/zombies');
+    setZombies(tmpList.data);
+    setRefreshing(false)
+  }
+
+  function refresh() {
+    list();
+  }
+  refresh = refresh.bind(this);
+
+
+  useEffect(() => {
+    list();
+  }, [])
+
+
   return(
-    <Text>
-		ZombieList
-	</Text>
+    <Container>
+
+      <Registros>
+        <Title>Lista de Zombies</Title>
+
+        <IconRight 
+        style={{ backgroundColor: 'white', borderRadius: 15, alignItems: 'center', width: 30 }}
+        onPress={ () => navigation.navigate('ZombieForm') }
+        >
+          <Icon name='add' size={25} color='#666'/>
+        </IconRight>
+      </Registros>
+
+      <List
+        keyExtractor={item => item.key}
+        data={zombies}
+        renderItem={ ({item}) => <ListItem navigation={navigation} refresh={refresh} data={item} route={'zombies'} edit={'ZombieForm'} /> }
+        refreshing={refreshing}
+        extraData={zombies}
+        onRefresh={ ()=>refresh() }
+      />
+  </Container>
   )
 }
 

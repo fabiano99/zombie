@@ -30,12 +30,11 @@ export default function WeaponForm({ navigation }){
           });
       }
 
-
+      load(id);
       setAttack(0);
       setName('');
       Keyboard.dismiss();
 
-			// navigation.navigate({ routeName: 'Preload' });
 			setErrorMessage(null);
 
 		} catch(response) {
@@ -47,14 +46,13 @@ export default function WeaponForm({ navigation }){
   let load = async (id) => {
     if(id) {
       const response = await api.get(`/weapons/${id}`)
-      console.log(response);
       setName(response.data.name);
       setAttack(response.data.attack);
     }
 
   }
 
-  useEffect( () => { load(id) },[])
+  useEffect( () => { load(id) },[id]);
 
   return(
     <Container>
