@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import {Keyboard, Text} from 'react-native';
-import { Container, Input, AttackText, SubmitButton, SubmitText, AttackSlider,TitleText, TextError } from './styles';
+import {Keyboard} from 'react-native';
+import { AttackText, AttackSlider } from './styles';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Container, Input, SubmitButton, SubmitText, TitleText, TextError, Header, IconRight } from '../../../components/Form/styles';
 import api from '../../../services/api';
 
 export default function WeaponForm({ navigation }){
@@ -57,9 +59,16 @@ export default function WeaponForm({ navigation }){
   return(
     <Container>
 
-      <TitleText>
-        Cadastrar Arma
+      <Header>
+        <IconRight
+          onPress={() => navigation.navigate('WeaponList')}
+        >
+          <Icon name='navigate-before' size={30} color='white' />
+        </IconRight>
+        <TitleText>
+          Cadastrar Arma
       </TitleText>
+      </Header>
 
       <Input
         placeholder="Nome"
@@ -94,10 +103,3 @@ export default function WeaponForm({ navigation }){
     </Container>
   )
 }
-
-// WeaponForm.navigationOptions = {
-//   tabBarLabel: 'Registrar',
-//   tabBarIcon: ({ tintColor }) => (
-//     <Icon name="edit" size={24} color={tintColor} />
-//   )
-// };

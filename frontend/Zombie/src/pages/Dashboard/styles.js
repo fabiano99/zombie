@@ -2,43 +2,45 @@ import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
 
 export const Container = styled(LinearGradient).attrs({
-  colors: ['#262630', '#1B2D4E']
+  colors: ['#08090B', '#08090B']
 })`
   flex:1;
+  justify-content: space-between;
 `;
 
-export const AreaSaldo = styled.View`
-  align-items: center;
-  margin: 30px 0 30px 0;  
-`;
-
-export const SaldoTitle = styled.Text`
+export const Title = styled.Text`
   color: #DDD;
   font-size: 18px;
   font-style: italic;
 `;
 
-export const Saldo = styled.Text`
-  color: #FFF;
-  font-size: 28px;
-  font-weight: bold;
-`;
-
-export const Registros = styled.View`
-  flex-direction: row;
+export const Link = styled.TouchableOpacity`
+  background-color: #222;
+  border-radius: 50px;
+  width: 80%;
+  height: 100px;
+  margin: 20px;
+  padding: 10px;
   align-items: center;
-  margin-left: 15px;
+  justify-content: center;
 `;
 
-export const Title = styled.Text`
-  color: #FFF;
-  font-size: 20px;
-  font-weight: bold;
+export const ButtonLogout = styled.TouchableOpacity`
+  height: 100px;
+  margin: 10px;
+  padding: 10px
 `;
 
-export const IconRight = styled.TouchableOpacity``;
 
-export const List = styled.FlatList`
-  margin-top: 12px;
+export const AreaLink = styled.View`
+  justify-content: center;
+  align-items: center;
+`;
+
+export const AreaLogout = styled.View`
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin: 10px
 `;
 

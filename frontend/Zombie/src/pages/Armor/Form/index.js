@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {Keyboard, Text} from 'react-native';
-import { Container, Input, DefenseText, SubmitButton, SubmitText, DefenseSlider,TitleText, TextError } from './styles';
+import { DefenseText, DefenseSlider } from './styles';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Container, Input, SubmitButton, SubmitText, TitleText, TextError, Header, IconRight } from '../../../components/Form/styles';
 import api from '../../../services/api';
 
 export default function ArmorForm({ navigation }){
@@ -29,7 +31,7 @@ export default function ArmorForm({ navigation }){
           name
           });
       }
-      
+
       load(id);
       setDefense(0);
       setName('');
@@ -56,9 +58,16 @@ export default function ArmorForm({ navigation }){
   return(
     <Container>
 
-      <TitleText>
-        Cadastrar Armadura
-      </TitleText>
+      <Header>
+        <IconRight
+          onPress={() => navigation.navigate('WeaponList')}
+        >
+          <Icon name='navigate-before' size={30} color='white' />
+        </IconRight>
+        <TitleText>
+          Cadastrar Armadura
+        </TitleText>
+      </Header>
 
       <Input
         placeholder="Nome"
@@ -92,10 +101,3 @@ export default function ArmorForm({ navigation }){
     </Container>
   )
 }
-
-// ArmorForm.navigationOptions = {
-//   tabBarLabel: 'Registrar',
-//   tabBarIcon: ({ tintColor }) => (
-//     <Icon name="edit" size={24} color={tintColor} />
-//   )
-// };

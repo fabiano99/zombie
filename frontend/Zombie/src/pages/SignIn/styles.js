@@ -1,17 +1,12 @@
 import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components/native';
 
-export const Background = styled(LinearGradient).attrs({
-  colors: ['#08090B', '#08090B']
-})`
-  flex: 1;
-`; 
+// export const Background = styled(LinearGradient).attrs({
+//   colors: ['#08090B', '#08090B']
+// })`
+//   flex: 1;
+// `; 
 
-export const Container = styled.KeyboardAvoidingView`
-  flex:1;
-  align-items: center;
-  justify-content: center;
-`;
 
 export const Logo = styled.Image`
   margin-bottom: 15px;

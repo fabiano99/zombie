@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, AsyncStorage, Alert } from 'react-native';
-import {Background, Container, Logo, AreaInput, Input, SubmitButton, SubmitText, SignUpLink, SignUpText, TextError} from './styles';
+import { AsyncStorage, Alert } from 'react-native';
+import {Input, Logo, SubmitButton, SubmitText, AreaInput, SignUpLink, SignUpText } from './styles';
+import { Container, TextError } from '../../components/Form/styles';
 import api from '../../services/api';
-import { color } from 'react-native-reanimated';
 
 export default function SignIn({ navigation }){
 
@@ -33,7 +33,6 @@ export default function SignIn({ navigation }){
 	}
 
 	return (
-		<Background>
 			<Container>
 				<Logo source={ require('../../assets/logo.png') }/>
 
@@ -72,6 +71,5 @@ export default function SignIn({ navigation }){
 					</SignUpText>
 				</SignUpLink>
 			</Container>
-		</Background>
 	);
 }

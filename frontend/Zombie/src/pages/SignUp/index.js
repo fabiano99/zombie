@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Platform, Alert, AsyncStorage } from 'react-native';
-
-import { Background, Container, Logo, AreaInput, Input,
+import { Background, Container, AreaInput, Input,
 		 SubmitButton, SubmitText, SignUpText, SignInButton, SignInText, TextError} from './styles';
 import api from '../../services/api';
 		 
@@ -24,7 +23,6 @@ export default function SignUp({ navigation }){
         username: nome
       });
 
-      
 			setErrorMessage(null);
       navigation.navigate({ routeName: 'SignIn' });
 

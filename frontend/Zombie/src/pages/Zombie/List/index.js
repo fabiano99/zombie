@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Text, Button, View } from 'react-native';
-import { Container, Registros, Title, IconRight, List } from './styles';
+import { Container, Header, Title, IconRight, List } from '../../../components/List/styles';
 import ListItem from '../../../components/ListItem';
 import api from '../../../services/api';
 import  Icon  from 'react-native-vector-icons/MaterialIcons';
 
-
 export default function ZombieList({ navigation }){
-
 
   const [zombies, setZombies] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
@@ -34,7 +32,14 @@ export default function ZombieList({ navigation }){
   return(
     <Container>
 
-      <Registros>
+      <Header>
+
+        <IconRight 
+          onPress={ () => navigation.navigate('Dashboard') }
+          >
+          <Icon name='navigate-before' size={30} color='white'/>
+        </IconRight>
+        
         <Title>Lista de Zombies</Title>
 
         <IconRight 
@@ -43,7 +48,7 @@ export default function ZombieList({ navigation }){
         >
           <Icon name='add' size={25} color='#666'/>
         </IconRight>
-      </Registros>
+      </Header>
 
       <List
         keyExtractor={item => item.key}
@@ -56,10 +61,3 @@ export default function ZombieList({ navigation }){
   </Container>
   )
 }
-
-ZombieList.navigationOptions = {
-  tabBarLabel: 'Registrar',
-  tabBarIcon: ({ tintColor }) => (
-    <Icon name="edit" size={24} color={tintColor} />
-  )
-};

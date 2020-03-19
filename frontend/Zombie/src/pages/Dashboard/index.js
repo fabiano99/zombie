@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import {View, Text, TouchableOpacity, AsyncStorage} from 'react-native';
+import {View, Text, TouchableOpacity, AsyncStorage, Button} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Container, AreaSaldo, SaldoTitle, Saldo, Registros, Title, IconRight, List } from './styles';
-// import HistoricoList from '../../components/HistoricoList';
+import { Container, Link, AreaLink, AreaLogout,ButtonLogout } from './styles';
+import { Title } from '../../components/List/styles';
 
 export default function Dashboard({ navigation }){
 
@@ -10,40 +10,34 @@ export default function Dashboard({ navigation }){
     await AsyncStorage.removeItem('@ZombieApi:token');
     navigation.navigate({ routeName: 'SignIn' });
   }
-  const [saldo, setSaldo] = useState(0);
-  const [historico, setHistorico] = useState([
-    {key: 1, saldo: 300, tipo: 'despesa'},
-    {key: 3, saldo: 50, tipo: 'despesa'},
-    {key: 15, saldo: 600, tipo: 'receita'},
-  ]);
 
   return(
     <Container>
-      <AreaSaldo>
-        <SaldoTitle>Saldo Atual</SaldoTitle>
-        <Saldo>R$ 123.00</Saldo>
-      </AreaSaldo>
+      <AreaLink>
 
-      <Registros>
-        <Title>Registros do dia</Title>
-        <IconRight>
-          <Icon name="chevron-right" size={30} color="#FFF" />
-        </IconRight>
-      </Registros>
+        <Link onPress={ () => navigation.navigate("ZombieList") } style={{ alignItems: 'center', justifyContent: 'center' }}  >
+          <Title>Zombies</Title>
+        </Link>
 
-      {/* <List
-        keyExtractor={item => item.key}
-        data={historico}
-        renderItem={ ({item}) => <HistoricoList data={item} /> }
-      /> */}
+        <Link onPress={ () => navigation.navigate("WeaponList")} >
+          <Title>Armas</Title>
+        </Link>
+
+        <Link onPress={ () => navigation.navigate("ArmorList")} >
+          <Title>Armaduras</Title>
+        </Link>
+          
+      </AreaLink>
+
+      <AreaLogout> 
+        <ButtonLogout onPress={ () => logOut() } >
+          <Icon name='input' color='white' size={30}>
+          </Icon>
+          <Title>SAIR</Title>
+        </ButtonLogout>
+
+      </AreaLogout>
 
     </Container>
   )
 }
-
-Dashboard.navigationOptions = {
-  tabBarLabel: 'Home',
-  tabBarIcon: ({ tintColor }) => (
-    <Icon name="home" size={24} color={tintColor} />
-  )
-};

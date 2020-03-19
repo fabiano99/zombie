@@ -22,15 +22,16 @@ const Routes = createAppContainer(
 			Sign: createSwitchNavigator({
 				Preload,
 				SignIn,
-				SignUp
-			}),
-			App: createBottomTabNavigator({
+				SignUp,
 				Dashboard,
 				WeaponList,
 				WeaponForm,
 				ArmorList,
 				ArmorForm,
 				ZombieList,
+				ZombieForm
+			}),
+			App: createBottomTabNavigator({
 				ZombieForm
 			}, {
 				tabBarOptions:{

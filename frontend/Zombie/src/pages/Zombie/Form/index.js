@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {Keyboard, Picker, Text, FlatList, View, Button} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Container, TextError, Input, PickerItem, AreaPicker, AddButton, RemoveButton, SubmitButton, SubmitText, AreaEquipment, ViewEquipment,TitleText, Label } from './styles';
+import {  PickerItem, AreaPicker, AddButton, RemoveButton, AreaEquipment, ViewEquipment, Label } from './styles';
+import {Container, TextError, Input, SubmitButton, SubmitText, TitleText, Header, IconRight} from '../../../components/Form/styles';
 import api from '../../../services/api';
 
 function Item({ title }) {
@@ -97,11 +98,11 @@ export default function ZombieForm({ navigation }) {
 
 function prepareToSave() {
   const tmpArmors = zombieArmors.map((value) => {
-    return value.id
+    return value?.id
   })
 
   const tmpWeapons = zombieWeapons.map((value) => {
-    return value.id
+    return value?.id
   })
 
   return { weapons: tmpWeapons, armors: tmpArmors }
@@ -115,7 +116,7 @@ function prepareToSave() {
     console.log
     console.log(zombieArmors);
     setRefreshing(true);
-    if(value?.id && loadedArmors && value.id > 0) zombieArmors.push(value);
+    if(value?.id && loadedArmors && value?.id > 0) zombieArmors.push(value);
     setRefreshing(false);
     setLoadedArmors(true);
     setArmor({id: -1, name: 'selecione'});
@@ -124,7 +125,7 @@ function prepareToSave() {
   function addWeapon(value) {
     console.log(zombieWeapons);
     setRefreshing(true);
-    if(value?.id && loadedWeapons && value.id > 0 )  zombieWeapons.push(value);
+    if(value?.id && loadedWeapons && value?.id > 0 )  zombieWeapons.push(value);
     setRefreshing(false);
     setLoadedWeapons(true);
     setWeapon({id: -1, name: 'selecione'});
@@ -133,10 +134,10 @@ function prepareToSave() {
   function removeArmors(id) {
     setRefreshing(true)
     if(zombieArmors.length === 1) {
-      setZombiesArmors([]);
+      setZombiesArmors([null]);
     } else {
       const filtered =  zombieArmors.filter((value, index, arr) => {
-        if(id != value.id) {
+        if(id != value?.id) {
           return value;
         }
       });
@@ -149,10 +150,10 @@ function prepareToSave() {
   function removeWeapons(id) {
     setRefreshing(true);
     if(zombieWeapons.length === 1) {
-      setZombiesWeapons([]);
+      setZombiesWeapons([null]);
     } else {
       const filtered =  zombieWeapons.filter((value, index, arr) => {
-        if(id != value.id) {
+        if(id != value?.id) {
           return value;
         }
       });
@@ -166,9 +167,18 @@ function prepareToSave() {
     
     <Container>
 
+      <Header>
+      <IconRight 
+          onPress={ () => navigation.navigate('ZombieList') }
+          >
+          <Icon name='navigate-before' size={30} color='white'/>
+      </IconRight>
       <TitleText>
         Cadastrar Zombie
       </TitleText>
+      </Header>
+
+
 
       <Input
         placeholder="Nome"
@@ -232,14 +242,14 @@ function prepareToSave() {
           renderItem={ ({ item }) => {
             return (
               <AreaEquipment >
-                <Item title={item.name} />
-                <RemoveButton onPress={ () => removeWeapons(item.id) }>
+                <Item title={item?.name} />
+                <RemoveButton onPress={ () => removeWeapons(item?.id) }>
                   <Icon name='delete' size={20} ></Icon>
                 </RemoveButton>
               </AreaEquipment>
             )
           } }
-          keyExtractor={ item => item.id }
+          keyExtractor={ item => item?.id }
           extraData={ zombieWeapons }
           refreshing={ refreshing }
           onRefresh={ ()=>refresh() }
@@ -250,14 +260,14 @@ function prepareToSave() {
           renderItem={ ({ item }) => {
             return (
               <AreaEquipment >
-                <Item title={item.name} />
-                <RemoveButton onPress={ () => removeArmors(item.id) }>
+                <Item title={item?.name} />
+                <RemoveButton onPress={ () => removeArmors(item?.id) }>
                   <Icon name='delete' size={20} ></Icon>
                 </RemoveButton>
               </AreaEquipment>
             )
           } }
-          keyExtractor={ item => item.id }
+          keyExtractor={ item => item?.id }
           extraData={ zombieArmors }
           refreshing={ refreshing }
           onRefresh={ ()=>refresh() }
@@ -274,10 +284,3 @@ function prepareToSave() {
     </Container>
   )
 }
-
-// ZombieForm.navigationOptions = {
-//   tabBarLabel: 'Zombie',
-//   tabBarIcon: ({ tintColor }) => (
-//     <Icon name="account-circle" size={24} color={tintColor} />
-//   )
-// };

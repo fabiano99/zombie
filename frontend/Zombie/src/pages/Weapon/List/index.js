@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Text, Button, View, SafeAreaView, FlatList, RefreshControl } from 'react-native';
-import { Container, Registros, Title, IconRight, List } from './styles';
+import { Container, Header, Title, IconRight, List } from '../../../components/List/styles';
+
 import ListItem from '../../../components/ListItem';
 import api from '../../../services/api';
 import  Icon  from 'react-native-vector-icons/MaterialIcons';
-
 
 export default function WeaponList({ navigation }){
 
@@ -32,7 +31,12 @@ export default function WeaponList({ navigation }){
   return(
     <Container>
 
-      <Registros>
+      <Header>
+        <IconRight 
+              onPress={ () => navigation.navigate('Dashboard') }
+              >
+          <Icon name='navigate-before' size={30} color='white'/>
+        </IconRight>
         <Title>Lista de Armas ({ weapons.length }) </Title>
 
         <IconRight 
@@ -41,7 +45,7 @@ export default function WeaponList({ navigation }){
         >
           <Icon name='add' size={25} color='#666'/>
         </IconRight>
-      </Registros>
+      </Header>
 
       <List
         keyExtractor={item => item.key}
@@ -54,15 +58,6 @@ export default function WeaponList({ navigation }){
           onRefresh={ ()=>refresh() }
       />
 
-
-
   </Container>
   )
 }
-
-WeaponList.navigationOptions = {
-  tabBarLabel: 'Registrar',
-  tabBarIcon: ({ tintColor }) => (
-    <Icon name="edit" size={24} color={tintColor} />
-  )
-};
