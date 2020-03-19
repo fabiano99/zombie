@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Keyboard, Picker, Text, FlatList, View, Button} from 'react-native';
+import {Keyboard, Picker, Text, FlatList, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {  PickerItem, AreaPicker, AddButton, RemoveButton, AreaEquipment, ViewEquipment, Label } from './styles';
 import {Container, TextError, Input, SubmitButton, SubmitText, TitleText, Header, IconRight} from '../../../components/Form/styles';
@@ -41,7 +41,6 @@ export default function ZombieForm({ navigation }) {
         return;
       }
       const prepared = prepareToSave();
-      console.log(prepared);
       if(id) {
 
        response = await api.put(`/zombies/${id}`, {
@@ -61,7 +60,6 @@ export default function ZombieForm({ navigation }) {
       setName('');
       Keyboard.dismiss();
 
-			// navigation.navigate({ routeName: 'Preload' });
 			setErrorMessage(null);
 
 		} catch(response) {
@@ -85,8 +83,6 @@ export default function ZombieForm({ navigation }) {
       setName(response.data.name);
       setZombiesArmors(response.data.armors);
       setZombiesWeapons(response.data.weapons);
-
-      console.log(response.data);
     }
 
   }
@@ -105,6 +101,13 @@ function prepareToSave() {
     return value?.id
   })
 
+  if(tmpArmors.length === 0) {
+    tmpArmors.push(null)
+  }
+  if(tmpWeapons.length === 0) {
+    tmpWeapons.push(null)
+  }
+
   return { weapons: tmpWeapons, armors: tmpArmors }
 }
 
@@ -113,8 +116,6 @@ function prepareToSave() {
   }
 
   function addArmor(value) {
-    console.log
-    console.log(zombieArmors);
     setRefreshing(true);
     if(value?.id && loadedArmors && value?.id > 0) zombieArmors.push(value);
     setRefreshing(false);
@@ -123,7 +124,6 @@ function prepareToSave() {
   }
 
   function addWeapon(value) {
-    console.log(zombieWeapons);
     setRefreshing(true);
     if(value?.id && loadedWeapons && value?.id > 0 )  zombieWeapons.push(value);
     setRefreshing(false);
@@ -134,7 +134,7 @@ function prepareToSave() {
   function removeArmors(id) {
     setRefreshing(true)
     if(zombieArmors.length === 1) {
-      setZombiesArmors([null]);
+      setZombiesArmors([]);
     } else {
       const filtered =  zombieArmors.filter((value, index, arr) => {
         if(id != value?.id) {
@@ -150,7 +150,7 @@ function prepareToSave() {
   function removeWeapons(id) {
     setRefreshing(true);
     if(zombieWeapons.length === 1) {
-      setZombiesWeapons([null]);
+      setZombiesWeapons([]);
     } else {
       const filtered =  zombieWeapons.filter((value, index, arr) => {
         if(id != value?.id) {
@@ -168,17 +168,15 @@ function prepareToSave() {
     <Container>
 
       <Header>
-      <IconRight 
-          onPress={ () => navigation.navigate('ZombieList') }
-          >
-          <Icon name='navigate-before' size={30} color='white'/>
-      </IconRight>
-      <TitleText>
-        Cadastrar Zombie
-      </TitleText>
+        <IconRight 
+            onPress={ () => navigation.navigate('ZombieList') }
+            >
+            <Icon name='navigate-before' size={30} color='white'/>
+        </IconRight>
+        <TitleText>
+          Cadastrar Zombie
+        </TitleText>
       </Header>
-
-
 
       <Input
         placeholder="Nome"
@@ -197,7 +195,7 @@ function prepareToSave() {
 
       <AreaPicker>
         <PickerItem
-          mode="dropdown"
+          mode="modal"
           selectedValue={ weapon } 
           onValueChange={ (itemValue, itemIndex)=> { setWeapon(itemValue); addWeapon(itemValue)} }
         >
@@ -218,7 +216,7 @@ function prepareToSave() {
       <AreaPicker>
 
         <PickerItem
-          mode="dropdown"
+          mode="modal"
           selectedValue={ armor } 
           onValueChange={ (itemValue, itemIndex)=> {setArmor(itemValue); addArmor(itemValue)} }
         >

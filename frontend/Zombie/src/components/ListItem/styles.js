@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
 
 export const Container = styled(LinearGradient).attrs({
-  colors: ['#fff', '#fff']
+  colors: ['#FFF', '#FFF']
 })`
   flex:1;
   border-radius: 5px;
@@ -12,39 +12,26 @@ export const Container = styled(LinearGradient).attrs({
   box-shadow: 2px 2px rgba(0,0,0,.4)
 `;
 
-export const AreaSaldo = styled.View`
-  align-items: center;
-  margin: 30px 0 30px 0;  
-`;
 
-export const SaldoTitle = styled.Text`
-  color: #DDD;
-  font-size: 18px;
-  font-style: italic;
-`;
-
-export const Saldo = styled.Text`
-  color: #FFF;
-  font-size: 28px;
-  font-weight: bold;
-`;
-
-export const Record = styled.View`
+export const Record = styled(LinearGradient).attrs({
+  colors: ['#FFF', '#FFF']
+})`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   margin: 1px 5px;
   padding: 10px;
-  background-color: white
+  border-radius: 10px
 `;
 
-export const Action = styled.View`
+export const Action = styled(LinearGradient).attrs({
+  colors: ['#FFF', '#FFF']
+})`
   flex-direction: row;
   align-items: center;
-
   margin: 1px 5px;
   padding: 10px;
-  background-color: white
+  border-radius: 10px;
 `;
 
 export const Title = styled.Text`

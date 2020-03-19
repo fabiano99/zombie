@@ -1,8 +1,5 @@
 import styled from 'styled-components/native';
 
-
-
-
 export const AreaPicker = styled.View`
   width: 90%;
   padding-top: 0;
@@ -12,14 +9,16 @@ export const AreaPicker = styled.View`
   justify-content: space-between;
   font-weight: bold;
   text-align: center;
+  border-radius: 20px;
 `;
 
 export const PickerItem = styled.Picker`
   height: 50px;
-  width: 70%;
+  width: 100%;
   background-color: rgba(255,255,255, 0.9);
   margin-top: 20px;
   font-size: 16px;
+  border-radius: 20px;
 `;
 
 export const AddButton = styled.TouchableOpacity`
@@ -65,6 +64,7 @@ export const ViewEquipment = styled.View`
   font-weight: bold;
   text-align: center;
   background-color: white;
+  border-radius: 10px
 `;
 
 export const Label = styled.View`

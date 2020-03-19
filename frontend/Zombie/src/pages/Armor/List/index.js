@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Text, Button, View } from 'react-native';
 import { Container, Header, Title, IconRight, List } from '../../../components/List/styles';
 import ListItem from '../../../components/ListItem';
 import api from '../../../services/api';

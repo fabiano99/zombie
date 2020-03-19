@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import {View, Text, TouchableOpacity, AsyncStorage, Button} from 'react-native';
+import React from 'react';
+import { AsyncStorage} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Container, Link, AreaLink, AreaLogout,ButtonLogout } from './styles';
 import { Title } from '../../components/List/styles';

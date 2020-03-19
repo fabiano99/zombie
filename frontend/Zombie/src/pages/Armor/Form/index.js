@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Keyboard, Text} from 'react-native';
+import {Keyboard} from 'react-native';
 import { DefenseText, DefenseSlider } from './styles';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Container, Input, SubmitButton, SubmitText, TitleText, TextError, Header, IconRight } from '../../../components/Form/styles';
