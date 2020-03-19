@@ -60,7 +60,7 @@ export default function ArmorForm({ navigation }){
 
       <Header>
         <IconRight
-          onPress={() => navigation.navigate('WeaponList')}
+          onPress={() => navigation.navigate('ArmorList')}
         >
           <Icon name='navigate-before' size={30} color='white' />
         </IconRight>
